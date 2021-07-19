@@ -5,7 +5,7 @@ import { RadiusUprightOutlined } from "@ant-design/icons";
 import { MoreOutlined } from "@ant-design/icons";
 import "antd/dist/antd.css";
 // import CloudIcon from "@material-ui/icons/Cloud";
-import Storm from "../Images/storm.png";
+// import Storm from "../Images/storm.png";
 import Drop from "../Images/drop.png";
 import Rain from "../Images/rain.png";
 import Wind from "../Images/wind.png";
@@ -16,10 +16,29 @@ import Cold from "../Images/raining.png";
 // import Sun from "../Images/sun.png";
 import axios from "axios";
 import { CalendarComponent } from "@syncfusion/ej2-react-calendars";
+import { app } from "../SignUp/Base";
 
+const BaseGet = app.firestore().collection("Authers");
 function Main() {
   const [input, setInput] = useState("");
   const [weatherData, setWeatherData] = useState("");
+  const [getBase, setGetBase] = useState([]);
+
+  const GetAuthers = async () => {
+    const newUser = await app.auth().currentUser;
+
+    if (newUser) {
+      await BaseGet.doc(newUser.uid)
+        .get()
+        .then((doc) => {
+          setGetBase(doc.data());
+        });
+    }
+  };
+
+  React.useEffect(() => {
+    GetAuthers();
+  }, []);
 
   const showDate = new Date();
 
@@ -250,22 +269,21 @@ function Main() {
                   fontWeight: "bold",
                 }}
               >
-                Lagos, NG
+                {getBase && getBase.name}
               </div>
-              <img src={Wind1} alt="Tunderstorm" style={{ width: "100px" }} />
-              <div
+              <img
+                src={getBase && getBase.Avatar}
+                alt="Tunderstorm"
                 style={{
-                  fontSize: "50px",
-                  fontWeight: "bold",
-                  color: "#fff",
+                  width: "150px",
+                  height: "150px",
+                  borderRadius: "500px",
+                  backgroundColor: "darkcyan",
                 }}
-              >
-                21<sup style={{ fontSize: "30px" }}>0</sup>c
-              </div>
-              <div
-                style={{ color: "#fff", fontSize: "18px", fontWeight: "600" }}
-              >
-                Cloudly
+              />
+
+              <div style={{ color: "#fff", textAlign: "center" }}>
+                Use the search Input above to make a search
               </div>
               <div style={{ color: "#FBEB05", fontWeight: "600" }}>
                 {" "}
@@ -275,17 +293,17 @@ function Main() {
               <div className="OtherWether">
                 <div className="OtherContent">
                   <img src={Wind} alt="Wind" width="23px" />
-                  <div>15km/h</div>
+                  <div>0km/h</div>
                   <div style={{ fontWeight: "lighter" }}>Wind</div>
                 </div>
                 <div className="OtherContent">
                   <img src={Drop} alt="Wind" width="16px" />
-                  <div>15km/h</div>
+                  <div>0%</div>
                   <div style={{ fontWeight: "lighter" }}>Humidity</div>
                 </div>
                 <div className="OtherContent">
                   <img src={Rain} alt="Wind" width="20px" />
-                  <div>15km/h</div>
+                  <div>0%</div>
                   <div style={{ fontWeight: "lighter" }}>COR</div>
                 </div>
               </div>
@@ -295,28 +313,28 @@ function Main() {
               <div className="Days">
                 <div className="Day1">
                   <div>
-                    15<sup>0</sup>
+                    0<sup>0</sup>
                   </div>
                   <img src={Stormy} alt="Wind" width="20px" />
                   <div style={{ fontWeight: "lighter" }}>10:00</div>
                 </div>
                 <div className="Day2">
                   <div>
-                    15<sup>0</sup>
+                    0<sup>0</sup>
                   </div>
                   <img src={Rain} alt="Wind" width="20px" />
                   <div style={{ fontWeight: "lighter" }}>Now</div>
                 </div>
                 <div className="Day1">
                   <div>
-                    15<sup>0</sup>
+                    0<sup>0</sup>
                   </div>
                   <img src={Stormy} alt="Wind" width="20px" />
                   <div style={{ fontWeight: "lighter" }}>12:00</div>
                 </div>
                 <div className="Day1">
                   <div>
-                    15<sup>0</sup>
+                    0<sup>0</sup>
                   </div>
                   <img src={Wind1} alt="Wind" width="20px" />
                   <div style={{ fontWeight: "lighter" }}>13:00</div>
