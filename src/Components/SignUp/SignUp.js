@@ -35,7 +35,7 @@ function SignUp() {
         password,
         Avatar: await imageURL,
       });
-      hist.push("/");
+      hist.push("/main");
     }
   };
 
@@ -43,7 +43,7 @@ function SignUp() {
     const User = await app.auth().signInWithEmailAndPassword(email, password);
 
     if (User) {
-      hist.push("/");
+      hist.push("/main");
     }
   };
 

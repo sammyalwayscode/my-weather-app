@@ -36,10 +36,6 @@ function Main() {
     }
   };
 
-  React.useEffect(() => {
-    GetAuthers();
-  }, []);
-
   const showDate = new Date();
 
   const displayTime =
@@ -66,8 +62,9 @@ function Main() {
     console.log(e.target.value);
   };
 
-  useEffect(() => {
+  React.useEffect(() => {
     Search();
+    GetAuthers();
   }, []);
 
   // date builder
@@ -279,6 +276,8 @@ function Main() {
                   height: "150px",
                   borderRadius: "500px",
                   backgroundColor: "darkcyan",
+                  objectFit: "cover",
+                  border: "2px solid #fff",
                 }}
               />
 
